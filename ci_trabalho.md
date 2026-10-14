@@ -73,7 +73,6 @@ Para demonstrar a interrupção: altere um teste para falhar, envie o commit e o
 
 ## Evidências de execução
 
-Os links da execução verde e da execução em que uma falha interrompeu o fluxo entram aqui depois do push para o remoto:
-
-- Sucesso: pendente
-- Falha detectada: pendente
+- Sucesso (teste restaurado): https://github.com/VilleSIlva/trabalho-devops/actions/runs/38592961187
+- Falha detectada: https://github.com/VilleSIlva/trabalho-devops/actions/runs/38592764803
+- Sucesso (primeira execução): https://github.com/VilleSIlva/trabalho-devops/actions/runs/38591693179
