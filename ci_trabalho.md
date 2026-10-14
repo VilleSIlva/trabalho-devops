@@ -1,6 +1,6 @@
 # Pipeline CI — Trabalho 5
 
-Pipeline mínimo e reproduzível em GitHub Actions. A definição está em [`.github/workflows/ci.yml`](../.github/workflows/ci.yml).
+Pipeline mínimo e reproduzível em GitHub Actions. A definição está em [`.github/workflows/ci.yml`](.github/workflows/ci.yml).
 
 ## Gatilho
 
@@ -52,7 +52,7 @@ export API_SECURITY_TOKEN_SECRET='cole-aqui-uma-chave-de-pelo-menos-32-bytes'
 ./mvnw -B verify
 ```
 
-O JAR fica em `target/`. Os testes usam um valor próprio em `src/test/resources/application.properties` e não precisam do secret de produção.
+O JAR fica em `target/`. Se `API_SECURITY_TOKEN_SECRET` não estiver definida, o teste gera uma chave só na memória daquela execução. Essa chave não é gravada no repositório.
 
 ## Como investigar falhas
 
@@ -68,8 +68,8 @@ Para demonstrar a interrupção: altere um teste para falhar, envie o commit e o
 
 - `api.security.token.secret` no `application.properties` principal só referencia `${API_SECURITY_TOKEN_SECRET}`. O valor não está no repositório e não entra no JAR.
 - No GitHub, o valor fica no secret `JWT_SECRET`. O workflow passa a variável para o Maven e não a escreve no log.
-- `src/test/resources/application.properties` tem uma chave exclusiva de teste. Ela existe só no classpath de teste.
-- Os logins `admin`/`admin` e `user`/`user` são usuários de demonstração criados na subida da aplicação. Não são o segredo do pipeline.
+- Os testes não gravam chave em arquivo. Sem a variável de ambiente, a classe de teste cria uma chave temporária em memória.
+- As senhas dos usuários `admin` e `user` vêm de `DEMO_ADMIN_PASSWORD` e `DEMO_USER_PASSWORD`. O código só cria esses usuários quando as variáveis existem.
 
 ## Evidências de execução
 

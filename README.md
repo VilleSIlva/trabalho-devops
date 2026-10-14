@@ -217,21 +217,21 @@ Arquivo: `com.unialfa.biblioteca.service.TokenService`
   - **`expiresAt`**: 24h
 - Assina com HS256 e retorna o token.
 
-## Usuários padrão
+## Usuários de demonstração
 
-Em `BibliotecaApplication`, existe um `CommandLineRunner` que cria dois usuários no start:
+No start, `BibliotecaApplication` cria dois usuários se as senhas estiverem nas variáveis de ambiente. As senhas não ficam no código.
 
-- `admin` / `admin` com perfil `ADMIN`
-- `user` / `user` com perfil `USER`
-
-Esses logins são dados de demonstração da aplicação. O segredo usado no pipeline de CI é outro e não fica no repositório.
+- `admin`, perfil `ADMIN`, senha em `DEMO_ADMIN_PASSWORD`
+- `user`, perfil `USER`, senha em `DEMO_USER_PASSWORD`
 
 ## Como executar
 
-- Defina a chave JWT e suba a aplicação:
+- Defina a chave JWT, as senhas de demonstração e suba a aplicação:
 
 ```bash
 export API_SECURITY_TOKEN_SECRET='cole-aqui-uma-chave-de-pelo-menos-32-bytes'
+export DEMO_ADMIN_PASSWORD='escolha-uma-senha-de-admin'
+export DEMO_USER_PASSWORD='escolha-uma-senha-de-user'
 ./mvnw spring-boot:run
 ```
 - Acessos:
@@ -244,11 +244,11 @@ export API_SECURITY_TOKEN_SECRET='cole-aqui-uma-chave-de-pelo-menos-32-bytes'
 - Fazer login e obter token (POST):
   - `http://localhost:8080/api/auth/login`
   - Body JSON:
-    - `{ "username": "admin", "password": "admin" }`
+    - `{ "username": "admin", "password": "<DEMO_ADMIN_PASSWORD>" }`
 - Usar token nas demais rotas:
   - Header: `Authorization: Bearer <token>`
 
 ## Pipeline de CI
 
-O build, os testes e o artefato rodam no GitHub Actions. Gatilho, etapas, dependências e como investigar falhas estão em [`docs/ci.md`](docs/ci.md).
+O build, os testes e o artefato rodam no GitHub Actions. Gatilho, etapas, dependências e como investigar falhas estão em [`ci_trabalho.md`](ci_trabalho.md).
 
